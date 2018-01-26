@@ -1,0 +1,46 @@
+<%= form_for [@car, @booking] do |f| %>
+    <% if @booking.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+          <ul>
+            <% @booking.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <h2> Please enter the details of user for whom car need to be reserved</h2>
+    <div class='field'>
+      <%= f.label :pickup_time %><br>
+      <div class='input-group date' id='datetimepicker1'>
+        <%= f.text_field :pickup_time, id: 'datetimepicker1', class: "form-control" %>
+        <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      </div>
+    </div>
+    <br/>
+    <div class='field'>
+      <%= f.label :return_time %><br>
+      <div class='input-group date' id='datetimepicker2'>
+        <%= f.text_field :return_time, id: 'datetimepicker2', class: "form-control" %>
+        <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      </div>
+    </div>
+    <br/>
+    <div class='field'>
+    <%= label_tag :select_user  %>
+    <%= select_tag 'select_user', options_for_select(@users.collect{ |u| [u.name + "  :  " + u.email, u.id] }),class: "form-control" %>
+    </div>
+
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker2').datetimepicker();
+    });
+</script>

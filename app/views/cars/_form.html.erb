@@ -1,0 +1,46 @@
+<%= form_for(@car) do |f| %>
+    <% if @car.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+          <ul>
+            <% @car.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :model %><br>
+      <%= f.text_field :model, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :manufacturer %><br>
+      <%= f.text_field :manufacturer, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :number %><br>
+      <%= f.text_field :number, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :rate %><br>
+      <%= f.text_field :rate, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :style %><br>
+      <%= f.select(:style, ['Hatchback', 'Sedan', 'SUV'], {}, {class: 'form-control'}) %>
+    </div>
+    <div class="form-group">
+      <%= f.label :location %><br>
+      <%= f.text_field :location, class: 'form-control' %>
+    </div>
+    <br>
+    <div class="actions">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Back", :back, class: 'btn btn-primary' %>
+    </div>
+
+<% end %>
+
+

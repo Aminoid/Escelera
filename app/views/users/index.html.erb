@@ -1,0 +1,51 @@
+<% content_for :top_content do %>
+    <div class="jumbotron">
+      <div class="container">
+        <% if user_signed_in? %>
+            <h3 class="text-center">Welcome <%= current_user.name %></h3>
+            <br />
+            <h4 class="text-center">Manage All Bookings</h4>
+            <br />
+            <% if current_user.try(:user?) %>
+                <p>
+                  <%= link_to 'Rent a Car', cars_path, class: 'btn btn-primary btn-lg' %>
+                </p>
+            <% else %>
+                <table class="table">
+                  <tr>
+                    <th>Model</th>
+                    <th>Manufacturer</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                  <% @bookings.each do |book| %>
+                    <tr>
+                      <td><%= book.car.model %></td>
+                      <td><%= book.car.manufacturer %></td>
+                      <td><%= book.user.name %></td>
+                      <td style="text-transform: capitalize"><%= book.status %></td>
+                      <td>
+                        <% if book.status == "reserved" %>
+                          <%= link_to "Cancel/", cancel_booking_url(book.id), data: { confirm: "Are you sure? "} %>
+                          <%= link_to "Check Out", check_out_url(book.id) %>
+                        <% elsif book.status == "returned" %>
+                          None
+                        <% elsif book.status == "checkOut" %>
+                          <%= link_to "Return", return_url(book.id) %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+            <% end %>
+        <% else %>
+            <h1>Welcome to Escelera!</h1>
+            <p>Register to get started.</p>
+            <p>
+              <%= link_to 'Register', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+            </p>
+        <% end %>
+      </div>
+    </div>
+<% end %>

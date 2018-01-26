@@ -1,0 +1,31 @@
+<h3 class="text-center">Booking History of <%= @user.name.capitalize  %> </h3>
+<table class="table">
+  <tr>
+    <th>Model</th>
+    <th>Manufacturer</th>
+    <th>Rate</th>
+    <th>Action</th>
+    <th>
+  </tr>
+  <% @bookings.each do |book| %>
+    <tr>
+      <td><%= book.car.model %></td>
+      <td><%= book.car.manufacturer %></td>
+      <td><%= book.car.rate %></td>
+      <td>
+        <% if book.status == "reserved" %>
+          <%= link_to "Check Out", check_out_url(book.id) %>
+        <% elsif book.status == "checkedOut" %>
+          <%= link_to "Return", return_url(book.id) %>
+        <% else %>
+          Returned
+        <% end %>
+        <% if book.status != "returned" %>
+          /<%= link_to "Cancel", cancel_booking_url(book.id), data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "Back", :back, class: 'btn btn-default btn-sm' %>

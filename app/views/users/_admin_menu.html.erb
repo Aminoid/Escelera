@@ -1,0 +1,25 @@
+<% if user_signed_in? %>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Manage
+          <span class="caret"></span>
+        </a>
+        <% if current_user.try(:admin?) or current_user.try(:superadmin?)   %>
+            <ul class="dropdown-menu" role="menu">
+              <li><%= link_to 'Users', show_all_path(:role => "user"), method: :get %></li>
+              <li><%= link_to 'Admins', show_all_path(:role => "admin"), method: :get %></li>
+              <% if current_user.try(:superadmin?)   %>
+                  <li><%= link_to 'Super Admins', show_all_path(:role => "superadmin"), method: :get %></li>
+              <% end %>
+              <li><%= link_to 'Cars', cars_path %></li>
+            </ul>
+      <% elsif current_user.try(:user?)  %>
+            <ul class="dropdown-menu" role="menu">
+              <li><%= link_to 'Bookings', user_bookings_url(current_user.id) %></li>
+            </ul>
+      <% end %>
+
+      </li>
+</ul>
+<% end %>

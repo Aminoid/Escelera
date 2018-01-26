@@ -1,0 +1,12 @@
+<h1>Car: <%= @car.id %></h1>
+<h3>Model: <%= @car.model %></h3>
+<h3>Manufacturer: <%= @car.manufacturer %></h3>
+
+<br />
+<p>
+  <%= link_to 'Edit', edit_car_path(@car) %>
+</p>
+
+<p>
+  <%= link_to 'All Cars', cars_url %>
+</p>

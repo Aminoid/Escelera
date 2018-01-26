@@ -1,0 +1,45 @@
+<% content_for :top_content do %>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Listing all bookings</h2>
+        <%= devise_error_messages! %>
+        <table class="table">
+          <tr>
+            <th>Booking ID</th>
+            <th>UserID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+
+          <% if !@bookings.nil? then
+               @bookings.each do |booking| %>
+                  <tr>
+                    <td><%= booking.id %></td>
+                    <td><%= link_to booking.user_id, user_bookings_url(booking.user_id) %></td></td>
+                    <td><%= booking.pickup_time.to_date %><br>
+                      <%= booking.pickup_time.to_time.strftime("%I:%M %p")%></td>
+                    <td><%= booking.return_time.to_date %><br>
+                      <%= booking.return_time.to_time.strftime("%I:%M %p")%></td></td>
+                    <td><%= booking.status.capitalize %></td>
+                    <td>
+                      <% if booking.status == "reserved" %>
+                          <%= link_to "Check Out", check_out_url(booking.id) %>
+                      <% elsif booking.status == "checkedOut" %>
+                          <%= link_to "Return", return_url(booking.id) %>
+                      <% else %>
+                          Returned
+                      <% end %>
+                      <% if booking.status != "returned" %>
+                          /<%= link_to "Cancel", cancel_booking_url(booking.id), data: { confirm: "Are you sure?" } %>
+                      <% end %>
+                  </tr>
+              <% end %>
+          <% end %>
+        </table>
+        <%= link_to "Back", :back, class: 'btn btn-default btn-sm' %>
+      </div>
+    </div>
+<% end %>
+

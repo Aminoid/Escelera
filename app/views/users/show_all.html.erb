@@ -1,0 +1,40 @@
+<% content_for :top_content do %>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Listing <%= @role.capitalize + 's' %></h2>
+        <%= devise_error_messages! %>
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <% if @role == 'user' %>
+                <th>History</th>
+            <% end %>
+            <th></th>
+            <th></th>
+          </tr>
+
+          <% if !@users.nil? then
+               @users.each do |user| %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <% if @role == 'user' %>
+                        <td><%= link_to 'Show', user_bookings_url(user.id) %></td>
+                        <td><%= link_to 'Edit', edit_user_path(user, :role => @role) %></td>
+                    <% end %>
+                    <% if @role != 'superadmin' %>
+                        <td><%= link_to 'Delete', user_path(user, :role => @role), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+                    <% end %>
+                  </tr>
+              <% end %>
+          <% end %>
+        </table>
+        <%= link_to "Back", :back, class: 'btn btn-default btn-sm' %>
+        <% if @role != 'user' %>
+            <%= link_to "Create New", new_user_path(:role => @role), class: 'btn btn-default btn-sm' %>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+

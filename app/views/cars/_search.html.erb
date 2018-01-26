@@ -1,0 +1,24 @@
+<%= search_form_for(@search, html: { class: :'form-inline' }) do |f| %>
+    <div class="form-group">
+      <%= f.label :model_cont, "Model" %>
+      <%= f.text_field :model_cont,class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :manufacturer_cont, "Manufacturer" %>
+      <%= f.text_field :manufacturer_cont, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :style_cont, "Style" %>
+      <%= f.text_field :style_cont, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :location_cont, "Location" %>
+      <%= f.text_field :location_cont, class: 'form-control' %>
+    </div><br><br>
+    <div class="actions"><%= f.submit "Search", class: 'btn btn-primary' %>
+      <% if !current_user.try(:user?)  %>
+          <%= link_to 'Add Car', new_car_path, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+
+<% end %>
